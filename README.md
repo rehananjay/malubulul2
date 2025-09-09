@@ -16,3 +16,13 @@ Game sederhana berbasis web untuk menebak angka antara 1-100.
 - Animasi dan visual modern
 
 ## 📁 Struktur File
+
+## 🌐 Demo
+[Main Game Online](https://[username].github.io/game-tebak-angka)
+
+## 🛠️ Cara Hosting Gratis
+1. Upload semua file ke repositori GitHub
+2. Buka Settings → Pages
+3. Pilih branch `main` dan folder `/root`
+4. Klik Save
+5. Game akan live di: `https://[username].github.io/[repo-name]`
