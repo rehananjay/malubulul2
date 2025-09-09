@@ -1,0 +1,82 @@
+// Elemen DOM
+const guessInput = document.getElementById('guessInput');
+const submitBtn = document.getElementById('submitBtn');
+const message = document.getElementById('message');
+const livesDisplay = document.getElementById('lives');
+const scoreDisplay = document.getElementById('score');
+const resetBtn = document.getElementById('resetBtn');
+
+// Variabel game
+let targetNumber = Math.floor(Math.random() * 100) + 1;
+let lives = 5;
+let score = 0;
+
+// Event listener
+submitBtn.addEventListener('click', checkGuess);
+resetBtn.addEventListener('click', resetGame);
+
+// Fungsi utama
+function checkGuess() {
+    const userGuess = parseInt(guessInput.value);
+    
+    // Validasi input
+    if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        message.textContent = "⚠️ Masukkan angka 1-100!";
+        message.style.color = "#ffeb3b";
+        return;
+    }
+    
+    // Cek tebakan
+    if (userGuess === targetNumber) {
+        message.textContent = `🎉 Benar! Angkanya ${targetNumber}!`;
+        message.style.color = "#4caf50";
+        score += lives * 10; // Skor berdasarkan sisa nyawa
+        scoreDisplay.textContent = score;
+        endGame(true);
+    } 
+    else if (userGuess < targetNumber) {
+        message.textContent = "📈 Terlalu rendah! Coba lagi.";
+        message.style.color = "#ff9800";
+    } 
+    else {
+        message.textContent = "📉 Terlalu tinggi! Coba lagi.";
+        message.style.color = "#ff9800";
+    }
+    
+    // Kurangi nyawa
+    lives--;
+    livesDisplay.textContent = lives;
+    
+    // Cek game over
+    if (lives === 0) {
+        message.textContent = `💀 Game Over! Angkanya ${targetNumber}`;
+        message.style.color = "#f44336";
+        endGame(false);
+    }
+    
+    // Reset input
+    guessInput.value = "";
+    guessInput.focus();
+}
+
+function endGame(isWin) {
+    submitBtn.disabled = true;
+    resetBtn.classList.remove('hidden');
+    
+    if (isWin) {
+        message.textContent += ` Skor: ${score}`;
+    }
+}
+
+function resetGame() {
+    targetNumber = Math.floor(Math.random() * 100) + 1;
+    lives = 5;
+    livesDisplay.textContent = lives;
+    message.textContent = "";
+    submitBtn.disabled = false;
+    resetBtn.classList.add('hidden');
+    guessInput.focus();
+}
+
+// Auto-focus input saat load
+guessInput.focus();
